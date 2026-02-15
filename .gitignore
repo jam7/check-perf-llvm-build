@@ -1,0 +1,6 @@
+*.swp
+*.swo
+*~
+bench-plan.md
+log-*
+plan.md
