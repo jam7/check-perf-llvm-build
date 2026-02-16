@@ -1,5 +1,25 @@
 # LLVM ビルド性能比較結果
+
+## リンク方式
+
+| 名前 | CMakeオプション | 説明 |
+|------|----------------|------|
+| static | (デフォルト) | 各ツールにLLVMライブラリを静的リンク。実行ファイルは大きくなるがリンク依存なし |
+| dso1 | `-DBUILD_SHARED_LIBS=ON` | 各LLVMライブラリを個別の共有ライブラリ(.so)としてビルド。開発時のリンク高速化向け（非推奨: インストール用途には非対応） |
+| dso2 | `-DLLVM_BUILD_LLVM_DYLIB=ON -DLLVM_LINK_LLVM_DYLIB=ON` | 全LLVMライブラリを単一の共有ライブラリ(libLLVM.so)に統合し、各ツールからリンク。公式に推奨される共有ライブラリ方式 |
+
+## 実行環境
+
+| 名前 | 実行方法 | 説明 |
+|------|---------|------|
+| centos7 | `apptainer exec ~/centos7-ve-llvm-build.sif` | CentOS 7 コンテナ (GCC 11.2.1) |
+| ubuntu | `apptainer exec ~/ubuntu-ve-llvm-build.sif` | Ubuntu コンテナ (GCC 13.3.0) |
+| native | 直接実行 | ホスト環境 (`/opt/nec/ve` 存在時のみ) |
+
+## LLVM ビルド性能比較結果
 実行日時: 2026-02-16 08:29:05
+
+ビルドタイプ: `Debug`, コンパイルスレッド数: 12, リンクスレッド数: 1
 
 | 環境 | リンク方式 | cmake (秒) | build (秒) | check-llvm (秒) | check-clang (秒) | 合計 (秒) |
 |------|-----------|------------|-----------|-----------------|------------------|----------|
@@ -9,10 +29,12 @@
 
 ---
 
-## 以前の結果 (cmake + check-llvm のみ)
+# 以前の結果 (cmake + check-llvm のみ)
 
-### SIF ファイル使用 (apptainer exec *.sif)
+## SIF ファイル使用 (apptainer exec *.sif)
 実行日時: 2026-02-15 17:50:10
+
+ビルドタイプ: `Debug`, コンパイルスレッド数: 12, リンクスレッド数: 1
 
 | 環境 | リンク方式 | cmake (秒) | check-llvm (秒) | 合計 (秒) |
 |------|-----------|------------|-----------------|----------|
@@ -23,8 +45,10 @@
 | ubuntu | dso1 | 16 | 921 | 937 |
 | ubuntu | dso2 | 15 | 991 | 1006 |
 
-### Docker イメージ使用 (apptainer exec docker://jam7/centos7-ve-llvm-build:latest)
+## Docker イメージ使用 (apptainer exec docker://jam7/centos7-ve-llvm-build:latest)
 実行日時: 2026-02-15 21:59:30
+
+ビルドタイプ: `Debug`, コンパイルスレッド数: 12, リンクスレッド数: 1
 
 | 環境 | リンク方式 | cmake (秒) | check-llvm (秒) | 合計 (秒) |
 |------|-----------|------------|-----------------|----------|
@@ -32,7 +56,9 @@
 | centos7 | dso1 | 20 | 981 | 1001 |
 | centos7 | dso2 | 14 | 1032 | 1046 |
 
-### centos7 比較 (SIF vs Docker)
+## centos7 比較 (SIF vs Docker)
+
+ビルドタイプ: `Debug`, コンパイルスレッド数: 12, リンクスレッド数: 1
 
 | リンク方式 | SIF 合計 (秒) | Docker 合計 (秒) | 差分 (秒) |
 |-----------|-------------|-----------------|----------|
