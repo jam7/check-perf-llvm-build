@@ -1,6 +1,17 @@
 # LLVM ビルド性能比較結果
+実行日時: 2026-02-16 08:29:05
 
-## SIF ファイル使用 (apptainer exec *.sif)
+| 環境 | リンク方式 | cmake (秒) | build (秒) | check-llvm (秒) | check-clang (秒) | 合計 (秒) |
+|------|-----------|------------|-----------|-----------------|------------------|----------|
+| centos7 | static | 15 | 1648 | 262 | 422 | 2347 |
+| centos7 | dso1 | 14 | 1435 | 288 | 537 | 2274 |
+| centos7 | dso2 | 15 | 1460 | 325 | 452 | 2252 |
+
+---
+
+## 以前の結果 (cmake + check-llvm のみ)
+
+### SIF ファイル使用 (apptainer exec *.sif)
 実行日時: 2026-02-15 17:50:10
 
 | 環境 | リンク方式 | cmake (秒) | check-llvm (秒) | 合計 (秒) |
@@ -12,7 +23,7 @@
 | ubuntu | shared1 | 16 | 921 | 937 |
 | ubuntu | shared2 | 15 | 991 | 1006 |
 
-## Docker イメージ使用 (apptainer exec docker://jam7/centos7-ve-llvm-build:latest)
+### Docker イメージ使用 (apptainer exec docker://jam7/centos7-ve-llvm-build:latest)
 実行日時: 2026-02-15 21:59:30
 
 | 環境 | リンク方式 | cmake (秒) | check-llvm (秒) | 合計 (秒) |
@@ -21,7 +32,7 @@
 | centos7 | shared1 | 20 | 981 | 1001 |
 | centos7 | shared2 | 14 | 1032 | 1046 |
 
-## centos7 比較 (SIF vs Docker)
+### centos7 比較 (SIF vs Docker)
 
 | リンク方式 | SIF 合計 (秒) | Docker 合計 (秒) | 差分 (秒) |
 |-----------|-------------|-----------------|----------|
