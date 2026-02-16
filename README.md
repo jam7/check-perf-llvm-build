@@ -2,6 +2,14 @@
 
 LLVM のビルド性能を、リンク方式（static / shared）ごとに比較するベンチマーク。
 
+## リンク方式
+
+| 名前 | CMake オプション | 説明 |
+|------|-----------------|------|
+| static | (デフォルト) | すべて静的リンク |
+| dso1 | `-DBUILD_SHARED_LIBS=ON` | 各ライブラリを個別の .so にビルド |
+| dso2 | `-DLLVM_BUILD_LLVM_DYLIB=ON -DLLVM_LINK_LLVM_DYLIB=ON` | 単一の libLLVM.so にまとめてビルド |
+
 ## Prerequisites
 
 コンテナイメージ（SIF ファイル）を事前に取得しておく:
