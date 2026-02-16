@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-LLVM_DEV_DIR=/home/jam/llvm-dev
-RESULT_FILE=/home/jam/check-perf/results.md
+LLVM_DEV_DIR=.
+RESULT_FILE=results.md
 
 # 環境定義: 名前 と コマンドプレフィックス
 ENVS="${ENVS:-centos7}"
@@ -13,8 +13,8 @@ fi
 get_cmd_prefix() {
   local env=$1
   case "$env" in
-    centos7) echo "apptainer exec $HOME/centos7-ve-llvm-build.sif" ;;
-    ubuntu)  echo "apptainer exec $HOME/ubuntu-ve-llvm-build.sif" ;;
+    centos7) echo "apptainer exec centos7-ve-llvm-build_latest.sif" ;;
+    ubuntu)  echo "apptainer exec ubuntu-ve-llvm-build_latest.sif" ;;
     native)  echo "" ;;
   esac
 }
